@@ -62,15 +62,15 @@ body {
 }
 /* 动画 */
 .char {
-  animation: slide-in 1s cubic-bezier(.2, 0, .1, 1) both;
-  animation-delay: calc(30ms * var(--char-index));
+  animation: slide-in 1.5s cubic-bezier(.2, 0, .1, 1) both;
+  animation-delay: calc(45ms * var(--char-index));
   will-change:transform;
   transform-origin: top left;
 }
 
 @keyframes slide-in {
   from {
-    transform: translateY(10px) scaleY(1.5);
+    transform: translateY(20px) scaleY(1.5);
     opacity: 0;
   }
 }
