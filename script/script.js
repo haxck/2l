@@ -1,6 +1,6 @@
 
 let lastIndex = 0
-window.onload = function () {
+
   function reset() {
     console.log(lastIndex)
     let words = document.querySelector("#words")
@@ -25,4 +25,4 @@ window.onload = function () {
   )
   // btn.onclick = reset
   reset()
-}
+
