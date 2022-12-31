@@ -1,0 +1,76 @@
+
+@font-face {
+  font-family: 'ZhuZi';
+  font-display: swap;
+  src: url(https://blog.dorakika.cn/font/ZhuZiAWan5.woff2);
+}
+:root{
+  --texture: rgba(255, 255, 255, 0.2);
+}
+body {
+  margin: 0;
+  font-family: 'ZhuZi','Kaiti';
+}
+
+.wrapper {
+  background-image: radial-gradient( circle at bottom center, var(--texture) 0, var(--texture) 20%, transparent 20%, transparent 100% ),radial-gradient( circle at bottom center, var(--texture) 0, var(--texture) 40%, transparent 40%, transparent 100% ),radial-gradient( circle at bottom center, var(--texture) 0, var(--texture) 60%, transparent 60%, transparent 100% ),radial-gradient( circle at bottom center, var(--texture) 0, var(--texture) 80%, transparent 80%, transparent 100% );
+  background-color: #f90;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.box {
+  max-width: 600px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8%;
+  text-align: center;
+}
+.words {
+  color: #FFF;
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 3.0rem;
+  letter-spacing: 0.2rem;
+  max-width: 370px;
+}
+
+.btn {
+  cursor: pointer;
+  color: #FFF;
+  background-color: rgb(169, 148, 44);
+  padding: 2px 24px;
+  border-radius: 45px;
+}
+
+.footer{
+  width: 100vw;
+  position: fixed;
+  bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.post {
+  margin-top: 1rem;
+  color: #EEE;
+  text-decoration: none;
+}
+/* 动画 */
+.char {
+  animation: slide-in 1s cubic-bezier(.2, 0, .1, 1) both;
+  animation-delay: calc(30ms * var(--char-index));
+  will-change:transform;
+  transform-origin: top left;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(10px) scaleY(1.5);
+    opacity: 0;
+  }
+}
