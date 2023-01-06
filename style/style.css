@@ -23,12 +23,17 @@ body {
 }
 
 .box {
-  max-width: 600px;
+  box-sizing: border-box;
   width: 100vw;
   display: flex;
   justify-content: center;
   margin-bottom: 8%;
   text-align: center;
+}
+@media screen and (max-width:420px){
+  .box{
+    padding: 0 1.5rem;
+  }
 }
 .words {
   color: #FFF;
@@ -36,7 +41,6 @@ body {
   font-size: 2rem;
   line-height: 3.0rem;
   letter-spacing: 0.2rem;
-  max-width: 370px;
 }
 
 .btn {
