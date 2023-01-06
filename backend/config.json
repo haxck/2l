@@ -1,0 +1,8 @@
+{
+  "db":{
+    "url": "mongodb://127.0.0.1:27017/",
+    "name": "2l",
+    "cn": "lovewords"
+  },
+  "port": 3000
+}
