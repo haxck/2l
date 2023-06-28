@@ -1,32 +1,34 @@
 'use client'
-import { useEffect, useState } from "react"
-import { POST } from "../api/route"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
-export default function Word() {
-
-  const [data, setData] = useState({
-    _id: ' ',
-    type: ' ',
-    sentent: ' ',
-    likeCount: 0
-  })
+export default function Word(
+  { content }: {
+    content: {
+      _id: string,
+      type: string,
+      sentent: string,
+      likeCount: number
+    }
+  }
+) {
   const [isLike, setIsLike] = useState(false)
+  const [data, setData] = useState({
+    ...content
+  })
+  const router = useRouter()
+  const url = window.location.origin + "/api"
   const fetchWord = async () => {
-    const res = await fetch("api/")
+    
+    const res = await fetch(url)
     const data = await res.json();
     setData(data[0])
     setIsLike(false)
+    router.push(`wisper/${data[0]._id}`)
   }
-
-  useEffect(() => {
-    fetchWord()
-  }, [])
-
-
   async function likeit() {
-
     if (!isLike) {
-      const o = await fetch('api/', {
+      const o = await fetch(url, {
         method: 'POST',
         headers: {
           "content-type": "application/json",
@@ -34,20 +36,17 @@ export default function Word() {
         body: JSON.stringify({
           id: data._id
         })
-      }).then(res => {
-        return res.json()
-      })
-
-      const now = data.likeCount + 1;
-      setData({
-        ...data,
-        likeCount: now
+      }).then(v => {
+        return v.json()
       })
       setIsLike(true)
+      setData({
+        ...data,
+        likeCount: data.likeCount + 1
+      })
     }
   }
-
-
+  console.log(url)
   return (
     <div className="w-5/6  rounded-xl  p-4 ">
       <p className="bg-[#0000002e] text-slate-400 p-3 -skew-y-3"># {data.type}
@@ -62,8 +61,8 @@ export default function Word() {
         </p>
       </div>
       <div className="flex justify-center pt-6">
-        <button onClick={likeit} className={"px-4 h-12 mr-6 heart " + (isLike? "isLike": " ") } type="submit">
-          
+        <button onClick={likeit} className={"px-4 h-12 mr-6 heart " + (isLike ? "isLike" : " ")} type="submit">
+
         </button>
         <button onClick={fetchWord} className="px-4 h-12 scale-150" type="submit">
           🪐

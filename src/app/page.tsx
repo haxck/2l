@@ -1,11 +1,15 @@
-'use client'
-import Word from "./components/Word"
+import { redirect } from "next/navigation";
+export default async function Home() {
 
-export default function Home() {
+  async function fetchword() {
+    const url: string = "http://localhost:3000/api";
+    const res = await fetch(url, { cache: "no-store" })
+      .then(res => res.json())
+    return res[0]
+  }
 
-  return (
-    <main className="mx-auto max-w-3xl flex min-h-screen max-h-screen flex-col items-center justify-center bg-slate-800">
-      <Word />
-    </main>
-  )
+  const word = await fetchword()
+
+  redirect("wisper/" + word._id)
+
 }
