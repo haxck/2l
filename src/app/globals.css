@@ -15,6 +15,7 @@
   background-size: 2900%;
   transform: scale(1.5);
 }
+
 .isLike {
   animation: heart-burst .8s steps(28) 1;
   background-position:right;
