@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  color: #475569;
+}
 .words{
   font-family: "LXGW WenKai", sans-serif;
 }
