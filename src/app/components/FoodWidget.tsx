@@ -5,7 +5,6 @@ const FoodWidget = ({list}:{list:{promt:string,list:string}}) => {
   const foods: string[] = list.list.split(" ")
   const [count, setCount] = useState(foods[0]);
   const [intervalId, setIntervalId] = useState(0);
-  console.log(foods,":",count)
 
   function sfood(min = 1, max = foods.length) {
     return Math.random() * (max - min) + min;
