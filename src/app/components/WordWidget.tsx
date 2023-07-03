@@ -49,7 +49,7 @@ export default function Word(
     <div className="isolate rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 flex flex-col justify-between  bg-red-100/20 px-4 sm:col-span-6 lg:col-span-4">
 
       <div className="before:block before:absolute before:-inset-1 before:-skew-y-3 before: relative block p-2 " >
-        <p className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent relative words text-xl whitespace-pre-wrap ">
+        <p className="rise-up bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent relative words text-xl whitespace-pre-wrap">
           {data.sentent.replace(/\\n/g, '\n')}
         </p>
       </div>
@@ -59,14 +59,14 @@ export default function Word(
           <span className="text-gray-600">{data.likeCount} 人喜欢</span>
         </div>
 
-        <div className="ml-auto flex">
+        <div className="ml-auto flex leading-[50px]">
 
-          <button onClick={likeit} className={"px-4 heart " + (isLike ? "isLike" : " ")} type="submit">
+          <a onClick={likeit} className={"px-4 heart cursor-pointer " + (isLike ? "isLike" : " ")} >
+          </a>
 
-          </button>
-          <button onClick={fetchWord} className="px-4 h-13 scale-150" type="submit">
-            🪐
-          </button>
+          <a onClick={fetchWord} className="px-4 h-13 plane cursor-pointer" >
+            
+          </a>
         </div>
 
       </div>

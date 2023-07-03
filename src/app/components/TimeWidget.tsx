@@ -9,13 +9,13 @@ export default function TimeWidget() {
         } else if (hours >= 9 && hours <= 11) {
             return "阳光明媚，加油加油！"
         } else if (hours >= 12 && hours <= 14) {
-            return "中午啦，补充点能力，休息一下！"
+            return "中午啦，休息一下，补充点能量！"
         } else if (hours >= 15 && hours <= 18) {
             return "未来可期！加油加油！"
         } else if (hours >= 19 && hours <= 21) {
-            return "晚上好，你也发愁吃点什么嘛？"
+            return "你也发愁吃点什么嘛？"
         } else if (hours >= 22 && hours <= 24) {
-            return "🛌夜深了,该睡觉啦，枕着甜甜的美梦入睡哈~"
+            return "🛌不早了,该睡觉啦，枕着甜甜的美梦入睡哈~"
         }
     }
     function s() {
@@ -29,7 +29,7 @@ export default function TimeWidget() {
         }
     }
     return (
-        <div className="words isolate rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 flex flex-col justify-center bg-orange-100/20 sm:col-span-6 lg:col-span-4 my-4 inline-block">
+        <div className="words isolate rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 flex flex-col justify-center bg-orange-100/20 sm:col-span-6 lg:col-span-4 my-4 inline-block space-y-1">
             <p className="text-gray-400">📅 {today.getMonth() + 1}月{today.getDate()}日 </p>
             <p className="text-xl">{s()}</p>
             <p>{welcome()}</p>

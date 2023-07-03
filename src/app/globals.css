@@ -9,7 +9,6 @@
   font-family: "LXGW WenKai", sans-serif;
 }
 .heart {
-  cursor: pointer;
   height: 50px;
   width: 50px;
   background-image: url('/web_heart_animation.png');
@@ -17,6 +16,15 @@
   background-repeat: no-repeat;
   background-size: 2900%;
   transform: scale(1.5);
+}
+.plane {
+  height: 50px;
+  width: 50px;
+  background-image: url('/web_plane2.png');
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scale(.7);
 }
 
 .isLike {
@@ -32,4 +40,16 @@
   to {
     background-position: right;
   }
+}
+
+@keyframes rise-up{
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+.rise-up{
+  animation: rise-up 1s forwards;
 }
