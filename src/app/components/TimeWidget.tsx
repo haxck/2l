@@ -1,7 +1,7 @@
 export default function TimeWidget() {
     const today = new Date();
     function welcome() {
-        const hours = today.getHours() + 1;
+        const hours = today.getHours();
         if (hours >= 0 && hours <= 5) {
             return "夜深了，你还在思考宇宙嘛？"
         } else if (hours >= 6 && hours <= 8) {
@@ -14,7 +14,7 @@ export default function TimeWidget() {
             return "未来可期！加油加油！"
         } else if (hours >= 19 && hours <= 21) {
             return "你也发愁吃点什么嘛？"
-        } else if (hours >= 22 && hours <= 24) {
+        } else if (hours >= 22 && hours <= 23) {
             return "🛌不早了,该睡觉啦，枕着甜甜的美梦入睡哈~"
         }
     }
