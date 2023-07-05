@@ -27,12 +27,12 @@ const FoodWidget = ({list}:{list:{promt:string,list:string}}) => {
   };
 
   return (
-    <div onClick={handleClick} className="active:scale-90 words isolate rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 flex flex-col justify-center bg-blue-100/20 sm:col-span-6 lg:col-span-4 mt-4 inline-block">
+    <div onClick={handleClick} className="active:scale-90 words dark:bg-slate-800  bg-slate-100 opacity-70 rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 flex flex-col justify-center bg-blue-100/20 sm:col-span-6 lg:col-span-4 mt-4 inline-block">
       <div className="">
-        <p className="tracking-wider">{list.promt}</p>
+        <p className="tracking-wider dark:text-slate-400">{list.promt}</p>
       </div>
       <div className="py-6">
-        <p className="tracking-wider text-2xl text-center font-bold h-16">{count}</p>
+        <p className="tracking-wider dark:text-slate-400 text-2xl text-center font-bold h-16">{count}</p>
       </div>
 
     </div>

@@ -46,7 +46,7 @@ export default function Word(
     }
   }
   return (
-    <div className="isolate rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 flex flex-col justify-between  bg-red-100/20 px-4 sm:col-span-6 lg:col-span-4">
+    <div className="dark:bg-slate-800 bg-slate-100 opacity-70 rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 flex flex-col justify-between  bg-red-100/20 px-4 sm:col-span-6 lg:col-span-4">
 
       <div className="before:block before:absolute before:-inset-1 before:-skew-y-3 before: relative block p-2 " >
         <p className="rise-up bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent relative words text-xl whitespace-pre-wrap">
