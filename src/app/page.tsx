@@ -1,4 +1,18 @@
-import WordWidget from './components/WordWidget'
+import dynamic from 'next/dynamic'
+
+const WordWidget = dynamic(() => import('./components/WordWidget'), {
+  loading: () =>
+    <div className="animate-pulse isolate rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 flex flex-col justify-between  bg-red-100/20 px-4 sm:col-span-6 lg:col-span-4">
+      <div className="flex-1 space-y-6 py-1">
+        <div className="h-3 bg-slate-200 rounded"></div>
+        <div className="space-y-3">
+          <div className="h-3 bg-slate-200 rounded"></div>
+        </div>
+      </div>
+    </div>
+  ,
+})
+
 import FoodWidget from './components/FoodWidget'
 import TimeWidget from './components/TimeWidget'
 async function getWord() {
