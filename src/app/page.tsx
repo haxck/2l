@@ -26,7 +26,7 @@ export default async function Home() {
 
   const word = await getWord()
   return (
-    <div className="p-6 select-none h-screen bg">
+    <div className="p-6 select-none min-h-screen bg">
       <TimeWidget />
       <WordWidget content={word[0]} />
       <div className='grid grid-cols-2 gap-3'>
