@@ -12,18 +12,24 @@ export default function Word(
     }
   }
 ) {
-  const [isLike, setIsLike] = useState(false)
+  const cacheLike = localStorage.getItem(content._id)
+  const [isLike, setIsLike] = useState(Boolean(cacheLike))
   const [data, setData] = useState({
     ...content
   })
   const router = useRouter()
-  const url = window.location.origin + "/api"
+  let url = ""
+  if(window !== undefined ){
+    url = window.location.origin + "/api"
+  }
   const fetchWord = async () => {
 
     const res = await fetch(url)
     const data = await res.json();
+    const word = data[0]
     setData(data[0])
-    setIsLike(false)
+    const cacheLike = localStorage.getItem(word._id)
+    setIsLike(Boolean(cacheLike))
   }
   async function likeit() {
     if (!isLike) {
@@ -33,6 +39,7 @@ export default function Word(
           "content-type": "application/json",
         },
         body: JSON.stringify({
+          type: "like",
           id: data._id
         })
       }).then(v => {
@@ -43,6 +50,27 @@ export default function Word(
         ...data,
         likeCount: data.likeCount + 1
       })
+
+      localStorage.setItem(data._id,"true")
+    }else{
+      const o = await fetch(url, {
+        method: 'POST',
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "dislike",
+          id: data._id
+        })
+      }).then(v => {
+        return v.json()
+      })
+      setIsLike(false)
+      setData({
+        ...data,
+        likeCount: data.likeCount - 1
+      })
+      localStorage.removeItem(data._id)
     }
   }
   return (
@@ -65,7 +93,7 @@ export default function Word(
           </a>
 
           <a onClick={fetchWord} className="px-4 h-13 plane cursor-pointer" >
-            
+
           </a>
         </div>
 

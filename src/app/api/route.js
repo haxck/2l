@@ -24,10 +24,14 @@ export const GET = async (request) => {
 
 export async function POST(request) {
   const p = await request.json()
+  if(p.type === "like"){
+    const data = await likeit(p.id)
+    return NextResponse.json(data);
+  }else if(p.type === "dislike"){
+    const data = await dislike(p.id)
+    return NextResponse.json(data);
+  }
 
-  const data = await likeit(p.id)
-
-  return NextResponse.json(data);
 }
 async function find(id) {
   try {
@@ -58,7 +62,24 @@ async function likeit(id) {
   }
 }
 
-
+async function dislike(id) {
+  try {
+    await connect()
+    const lw = await Lovewords.updateOne(
+      {
+        _id:id
+      },{
+        $inc:{
+          likeCount: -1
+        }
+      }
+      )
+      const res = await Lovewords.findById(id)
+      return res
+  } catch (error) {
+    return error
+  }
+}
 async function findOne(type, count) {
   try {
     await connect()
