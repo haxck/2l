@@ -1,39 +1,38 @@
 'use client'
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { server } from "../config"
 
-export default function Word(
-  { content }: {
-    content: {
-      _id: string,
-      type: string,
-      sentent: string,
-      likeCount: number
-    }
-  }
-) {
-  const cacheLike = localStorage.getItem(content._id)
+interface content {
+  _id: string,
+  type: string,
+  sentent: string,
+  likeCount: number
+}
+
+export default function Word({ content }: {content: content}) {
+  // 先获取之前是否点过赞
+  let cacheLike;
+  useEffect(() => {
+    cacheLike = localStorage.getItem(content._id)
+  }, [])
+
   const [isLike, setIsLike] = useState(Boolean(cacheLike))
   const [data, setData] = useState({
     ...content
   })
-  const router = useRouter()
-  let url = ""
-  if(window !== undefined ){
-    url = window.location.origin + "/api"
-  }
-  const fetchWord = async () => {
 
-    const res = await fetch(url)
+  const fetchWord = async () => {
+    const res = await fetch(`${server}/api`)
     const data = await res.json();
     const word = data[0]
-    setData(data[0])
+    setData(word)
     const cacheLike = localStorage.getItem(word._id)
     setIsLike(Boolean(cacheLike))
   }
+
   async function likeit() {
     if (!isLike) {
-      const o = await fetch(url, {
+      const o = await fetch(`${server}/api`, {
         method: 'POST',
         headers: {
           "content-type": "application/json",
@@ -45,15 +44,15 @@ export default function Word(
       }).then(v => {
         return v.json()
       })
+
       setIsLike(true)
       setData({
         ...data,
         likeCount: data.likeCount + 1
       })
-
-      localStorage.setItem(data._id,"true")
-    }else{
-      const o = await fetch(url, {
+      localStorage.setItem(data._id, "true")
+    } else {
+      const o = await fetch(`${server}/api`, {
         method: 'POST',
         headers: {
           "content-type": "application/json",
@@ -73,6 +72,7 @@ export default function Word(
       localStorage.removeItem(data._id)
     }
   }
+
   return (
     <div className="dark:bg-slate-800 bg-slate-100 opacity-70 rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 flex flex-col justify-between  bg-red-100/20 px-4 sm:col-span-6 lg:col-span-4">
 
@@ -88,13 +88,8 @@ export default function Word(
         </div>
 
         <div className="ml-auto flex leading-[50px]">
-
-          <a onClick={likeit} className={"px-4 heart cursor-pointer " + (isLike ? "isLike" : " ")} >
-          </a>
-
-          <a onClick={fetchWord} className="px-4 h-13 plane cursor-pointer" >
-
-          </a>
+          <a onClick={likeit} className={"px-4 heart cursor-pointer " + (isLike ? "isLike" : " ")} ></a>
+          <a onClick={fetchWord} className="px-4 h-13 plane cursor-pointer" ></a>
         </div>
 
       </div>
