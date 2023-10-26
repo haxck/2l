@@ -2,13 +2,14 @@ import './globals.css'
 import Script from 'next/script'
 import { Inter } from 'next/font/google'
 import { Metadata } from 'next'
-
+import { Providers } from './providers'
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata:Metadata = {
+export const metadata: Metadata = {
   title: '2lover',
   description: "情侣互动小工具",
   metadataBase: new URL("https://2l.haxck.com"),
+  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
 }
 
 export default function RootLayout({
@@ -17,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="zh-cn">
+    <html lang="zh-cn" >
       <head>
         <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-webfont@1/style.css"></link>
         <Script id='baidu'>
@@ -34,7 +35,11 @@ export default function RootLayout({
         }
         </Script>
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Providers>
+          {children}
+        </Providers>
+      </body>
     </html>
   )
 }
