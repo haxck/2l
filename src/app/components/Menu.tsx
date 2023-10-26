@@ -1,0 +1,72 @@
+import {
+  Button, Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownSection,
+  DropdownItem, Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter, useDisclosure, Input, Card, CardHeader, CardBody, CardFooter
+} from '@nextui-org/react';
+import { useState } from 'react';
+export default function Menu({SetCommemorations}) {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const [title, setTitle] = useState(null)
+  const [time, setTime] = useState(null)
+
+  const onAction = () => {
+    if (title === "" || title === null || time === null || time === "") {
+      alert("请填写完整")
+    } else {
+      SetCommemorations(title,time)
+      onOpenChange()
+    }
+  }
+  return <>
+    <Dropdown backdrop='blur'>
+      <DropdownTrigger>
+        <Button radius="full" className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg fixed bottom-8 right-8 text-2xl pb-1 font-bold" aria-label="Like" isIconOnly>+</Button>
+      </DropdownTrigger>
+      <DropdownMenu>
+        <DropdownItem onPress={onOpen} key="remember" onClick={() => {
+          setTitle(null)
+          setTime(null)
+        }}>纪念日</DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} hideCloseButton={true}>
+      <ModalContent>
+        {(onClose) => (
+
+          <>
+            <ModalHeader className="flex flex-col gap-1">添加新的纪念日</ModalHeader>
+            <ModalBody>
+              <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+                <Input key="remember" type="text" label="纪念日名称：" placeholder="什么纪念日呢？" size='lg' required onBlur={(value) => {
+                  setTitle(value.target.value)
+                }} />
+              </div>
+              <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+                <Input key="time" type="date" label="哪一天？" placeholder=' ' size='lg' isRequired onBlur={(value) => {
+                  setTime(value.target.value)
+                }} />
+              </div>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="light" onPress={onClose}>
+                Close
+              </Button>
+              <Button color="primary" onPress={onAction}>
+                Action
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
+  </>
+
+}
+
