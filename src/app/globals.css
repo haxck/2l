@@ -88,3 +88,7 @@
     transform: rotate(540deg);
   }
 }
+
+.swiper-slide:nth-child(n) {
+  border-radius: 0.75rem;
+}
