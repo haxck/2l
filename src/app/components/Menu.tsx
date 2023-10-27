@@ -56,10 +56,10 @@ export default function Menu({SetCommemorations}) {
             </ModalBody>
             <ModalFooter>
               <Button color="danger" variant="light" onPress={onClose}>
-                Close
+                取消
               </Button>
               <Button color="primary" onPress={onAction}>
-                Action
+                添加
               </Button>
             </ModalFooter>
           </>
