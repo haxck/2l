@@ -1,7 +1,7 @@
 export default function Link() {
   return (
     <a href="http://echo.haxck.com" target="_blank" rel="noopener noreferrer">
-      <div className="active:scale-90 words dark:bg-slate-800  bg-slate-100 opacity-70 rounded-xl mt-1 border border-gray-600/10 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0  bg-blue-100/20 py-12 px-5 relative">
+      <div className="active:scale-90 words dark:bg-slate-800  bg-slate-100 opacity-90 rounded-xl mt-1 border border-gray-600/10 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0  bg-blue-100/20 py-12 px-5 relative">
         <p className="text-lg font-semibold dark:text-slate-400">Echo</p>
         <p className="dark:text-slate-400">科技时代的书信</p>
         <p className="text-sm text-gray-500">echo.haxck.com</p>
