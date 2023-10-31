@@ -20,7 +20,7 @@ export default function Commemoration({commemorations,delCommemoration}) {
       className='mb-4'
     >
 
-      {commemorations.toReversed().map((data, index) => {
+      {commemorations.map((data, index) => {
         return <>
           <SwiperSlide key={data.title} >
             <Card className="py-4 bg-slate-100 rounded-xl border">
