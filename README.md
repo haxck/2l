@@ -1,7 +1,23 @@
 # 2Lover
+给喜欢的 ta 说句土味情话，记录俩人的纪念日，遇事不决猜丁壳，就连一会儿吃什么都帮你解决掉。
+
+
 土味情话
+[数据文件](./lovewords.json)
+# 截图
+![2l_screen_1](./README/2l_screen_1.jpg)
+![2l_screen_2](./README/2l_screen_2.png)
+![2l_screen_3](./README/2l_screen_4.jpg)
+![2l_screen_3](./README/2l_screen_3.jpg)
+
 
 # 搭建指南
+
+## 技术栈
+- Node.js
+- Next.js
+- MongoDB
+
 ## 安装依赖
 ```
 npm install
@@ -10,11 +26,3 @@ npm install
 ```
 next dev
 ```
-
-# Todo
-- [x] 点赞数据存储读取（数据库）
-- [x] 点赞动画
-- [ ] 开屏画面（把Logo先展示出来，再加载主页面）
-- [ ] 显示文字动画（没有思路）
-- [ ] PWA图标及App名称修改
-- [ ] 背景（生动活泼，最好是动态生成的）
