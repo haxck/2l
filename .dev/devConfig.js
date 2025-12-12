@@ -1,0 +1,1 @@
+export default {"1765523891081":{"entry":"D:\\project\\t\\2l\\src\\app\\function\\index.js","port":18081,"localUpstream":""}}

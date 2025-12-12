@@ -1,75 +1,73 @@
 'use client'
 import { useEffect, useState } from "react"
-import { server } from "../config"
+import kv from "../function/kv"
+
+
+// 定义数据类型
+interface Loveword {
+  _id: string;
+  type: string;
+  sentent: string;
+  likeCount: number;
+}
+// 模拟数据：每日一句
+const mockData: Loveword = {
+  _id: 'mock123',
+  type: 'love',
+  sentent: '愿你眼里总有光芒，活成你想要的模样。',
+  likeCount: 42
+};
 
 export default function Word() {
   // 先获取之前是否点过赞
 
-  const [data, setData] = useState()
-  const [isLoading, setIsLoading] = useState(true)
-  const [isLike, setIsLike] = useState(false)
+  const [data, setData] = useState<Loveword | undefined>();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLike, setIsLike] = useState(false);
 
   useEffect(() => {
-    fetch(`${server}/api`)
-      .then((res) => res.json())
-      .then(data => {
-        setData(data[0])
-        setIsLoading(false)
-        setIsLike(Boolean(localStorage.getItem(data[0]._id)))
-      })
+    setData(mockData)
+    setIsLike(Boolean(localStorage.getItem(mockData._id)))
+    setIsLoading(false)
 
   }, [])
 
 
   const fetchWord = async () => {
-    const res = await fetch(`${server}/api`)
-    const data = await res.json();
-    setData(data[0])
-    setIsLike(Boolean(localStorage.getItem(data[0]._id)))
+    let res = await kv.fetch("loveword-honey-0")
+    if (res === "EdgeKV get: key not found" || res instanceof Response === false) {
+      setData(mockData)
+      setIsLike(Boolean(localStorage.getItem(mockData._id)))
+      setIsLoading(false)
+      return
+    }
+    
+    // 解析响应内容
+    const dataStr = await res.text()
+    setData(JSON.parse(dataStr))
+    setIsLike(Boolean(localStorage.getItem(mockData._id)))
+    setIsLoading(false)
   }
 
-  async function likeit() {
-    if (!isLike) {
-      const o = await fetch(`${server}/api`, {
-        method: 'POST',
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          type: "like",
-          id: data._id
-        })
-      }).then(v => {
-        return v.json()
-      })
-
-      setIsLike(true)
-      setData({
-        ...data,
-        likeCount: data.likeCount + 1
-      })
-      localStorage.setItem(data._id, "true")
+  const likeit = () => {
+    if (!data) return;
+    
+    const newIsLike = !isLike;
+    setIsLike(newIsLike);
+    
+    // 更新localStorage中的点赞记录
+    if (newIsLike) {
+      localStorage.setItem(data._id, 'true');
+      // 更新点赞数（在真实环境中应该调用API）
+      setData(prev => prev ? { ...prev, likeCount: prev.likeCount + 1 } : prev);
     } else {
-      const o = await fetch(`${server}/api`, {
-        method: 'POST',
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          type: "dislike",
-          id: data._id
-        })
-      }).then(v => {
-        return v.json()
-      })
-      setIsLike(false)
-      setData({
-        ...data,
-        likeCount: data.likeCount - 1
-      })
-      localStorage.removeItem(data._id)
+      localStorage.removeItem(data._id);
+      // 更新点赞数（在真实环境中应该调用API）
+      setData(prev => prev ? { ...prev, likeCount: Math.max(0, prev.likeCount - 1) } : prev);
     }
   }
+
+
 
   if (isLoading) return <>
       <div className="animate-pulse isolate rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 flex flex-col justify-between  bg-red-100/20 px-4 sm:col-span-6 lg:col-span-4">

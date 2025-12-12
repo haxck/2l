@@ -1,0 +1,10 @@
+{
+  "name": "lover",
+  "entry": "./src/app/function/index.js",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "assets": {
+    "directory": "./out",
+    "notFoundStrategy": "404Page"
+  }
+}

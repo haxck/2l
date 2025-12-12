@@ -8,7 +8,7 @@ import Days from './Days';
 
 export default function Commemoration({commemorations,delCommemoration}) {
 
-  if (commemorations.length === 0) return ""
+  if (commemorations.length === 0) return null
   return <>
     <Swiper
       spaceBetween={50}

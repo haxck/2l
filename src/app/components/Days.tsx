@@ -1,14 +1,14 @@
 import dayjs from 'dayjs';
 import { Children } from 'react';
-var relativeTime = require('dayjs/plugin/relativeTime')
-var updateLocale = require('dayjs/plugin/updateLocale')
+import relativeTime from 'dayjs/plugin/relativeTime';
+import updateLocale from 'dayjs/plugin/updateLocale';
 
 
-dayjs.extend(relativeTime)
+dayjs.extend(relativeTime);
+dayjs.extend(updateLocale);
 
-dayjs.extend(updateLocale)
-
-dayjs.updateLocale('en', {
+const dayjsWithLocale = dayjs as any;
+dayjsWithLocale.updateLocale('en', {
   relativeTime: {
     future: "还有 %s",
     past: "%s 之前",

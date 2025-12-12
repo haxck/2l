@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="zh-cn" >
       <head>
         <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-webfont@1/style.css"></link>
-        <Script id='baidu'>
+        {/* <Script id='baidu'>
         {
           `
           var _hmt = _hmt || [];
@@ -33,7 +33,7 @@ export default function RootLayout({
           })();
           `
         }
-        </Script>
+        </Script> */}
       </head>
       <body className={inter.className}>
         <Providers>
