@@ -27,14 +27,22 @@ const FoodWidget = ({list}:{list:{promt:string,list:string}}) => {
   };
 
   return (
-    <div onClick={handleClick} className="active:scale-90 words dark:bg-slate-800  bg-slate-100 opacity-90 rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 flex flex-col justify-center bg-blue-100/20  mt-4 inline-block">
-      <div className="">
-        <p className="tracking-wider dark:text-slate-400">{list.promt}</p>
+    <div onClick={handleClick} className="active:scale-90 dark:bg-slate-800 bg-slate-100 opacity-90 rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 mt-4 aspect-square">
+      {/* 外层flex容器 */}
+      <div className="w-full h-full flex flex-col">
+        {/* 顶部行 - 包含提示文字 */}
+        <div className="flex items-start justify-start">
+          <p className="tracking-wider dark:text-slate-400">{list.promt}</p>
+        </div>
+        
+        {/* 中间行 - 占满剩余空间，用于将食物选项垂直居中 */}
+        <div className="flex-1 flex items-center justify-center">
+          <p className="tracking-wider dark:text-slate-400 text-2xl text-center font-bold">{count}</p>
+        </div>
+        
+        {/* 底部行 - 空行，用于维持整体布局平衡 */}
+        <div className="h-8"></div>
       </div>
-      <div className="py-6">
-        <p className="tracking-wider dark:text-slate-400 text-2xl text-center font-bold h-16">{count}</p>
-      </div>
-
     </div>
   );
 };

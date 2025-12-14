@@ -1,12 +1,14 @@
 "use client"
 import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/effect-cards';
 import { EffectCards } from 'swiper/modules'
-import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader } from '@nextui-org/react';
 import Days from './Days';
 
 export default function Commemoration({commemorations,delCommemoration}) {
 
-  if (commemorations.length === 0) return null
+  if (commemorations.length === 0) return ""
   return <>
     <Swiper
       spaceBetween={50}
@@ -21,7 +23,7 @@ export default function Commemoration({commemorations,delCommemoration}) {
       {commemorations.map((data, index) => {
         return <>
           <SwiperSlide key={data.title}>
-            <Card className="py-4 bg-slate-100 rounded-xl dark:bg-slate-800 ">
+            <Card className="py-4 bg-slate-100 rounded-xl dark:bg-slate-800 opacity-95">
               <CardHeader className=" pb-0 pt-2 px-5 flex-col justify-center items-center ">
                 <Button isIconOnly size='sm' onPress={()=>{delCommemoration(index)}} className='absolute right-3 top-3 bg-red-400 dark:bg-red-300 p-2 '>
                   <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">
