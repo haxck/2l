@@ -47,16 +47,7 @@ export default function Word() {
       // 提取只有情话部分（去掉外层双引号、中文引号和表情）
       // API返回格式: "“情话内容” 😄"
       let loveSentence = apiResponse;
-      
-      // 去掉外层的双引号
-      loveSentence = loveSentence.replace(/^"|"$/g, '');
-      
-      // 去掉中文引号
-      loveSentence = loveSentence.replace(/^“|”$/g, '');
-      
-      // 去掉表情符号
-      loveSentence = loveSentence.replace(/[\u{1F600}-\u{1F6FF}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}]/gu, '').trim();
-      
+
       // 创建符合Loveword接口的数据
       const newWord = {
         _id: `ai-${Date.now()}`,
@@ -83,16 +74,6 @@ export default function Word() {
     const newIsLike = !isLike;
     setIsLike(newIsLike);
     
-    // 更新localStorage中的点赞记录
-    if (newIsLike) {
-      localStorage.setItem(data._id, 'true');
-      // 更新点赞数（在真实环境中应该调用API）
-      setData(prev => prev ? { ...prev, likeCount: prev.likeCount + 1 } : prev);
-    } else {
-      localStorage.removeItem(data._id);
-      // 更新点赞数（在真实环境中应该调用API）
-      setData(prev => prev ? { ...prev, likeCount: Math.max(0, prev.likeCount - 1) } : prev);
-    }
   }
 
 
@@ -126,7 +107,6 @@ export default function Word() {
         </div>
 
         <div className="ml-auto flex leading-[50px]">
-          <a onClick={likeit} className={"px-4 heart cursor-pointer " + (isLike ? "isLike" : " ")} ></a>
           <a onClick={fetchWord} className="px-4 h-13 plane cursor-pointer" ></a>
         </div>
 

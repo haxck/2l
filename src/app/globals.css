@@ -62,31 +62,34 @@
 
 .bg {
   position: relative;
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
+  background-image: conic-gradient(from 36deg at 20% 80%, #A100FFFF 0% 25%, #000000 25% 30%, #119CFDFF 30% 50%);
+  background-attachment: fixed;
 }
 
 .bg::after {
   content: " ";
   position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 12px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-image: conic-gradient(from 36deg at 20% 80%, #A100FFFF 0% 25%, #000000 25% 30%, #119CFDFF 30% 50%);
-  filter: blur(1000px);
+  filter: blur(80px);
   z-index: -1;
   animation: move 15s linear infinite;
+  opacity: 0.8;
 }
 
 @keyframes move {
   from {
-    transform: rotate3D(0,0,1,180deg);
+    transform: rotate3D(0,0,1,0deg);
   }
 
   to {
-    transform: rotate3D(0,0,1,180deg);
+    transform: rotate3D(0,0,1,360deg);
   }
 }
 
