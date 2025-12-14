@@ -31,8 +31,8 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="p-6 select-none min-h-screen bg flex justify-center items-center">
-      <div className='max-sm:w-full max-lg:w-2/3 max-xl:w-3/4 w-1/4'>
+    <div className="p-6 select-none min-h-screen bg flex justify-center">
+      <div className='max-sm:w-full max-lg:w-2/3 max-xl:w-3/4 w-1/4 py-8'>
         <TimeWidget />
         <Menu SetCommemorations={newCommemoration} />
         <Commemoration commemorations={commemorations} delCommemoration={delCommemoration} />

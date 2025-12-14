@@ -1,9 +1,7 @@
 "use client"
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/effect-cards';
 import { EffectCards } from 'swiper/modules'
-import { Button, Card, CardBody, CardHeader } from '@nextui-org/react';
+import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import Days from './Days';
 
 export default function Commemoration({commemorations,delCommemoration}) {

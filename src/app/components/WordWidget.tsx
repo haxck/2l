@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState } from "react"
-import kv from "../function/kv"
 
 
 // 定义数据类型
@@ -26,27 +25,56 @@ export default function Word() {
   const [isLike, setIsLike] = useState(false);
 
   useEffect(() => {
-    setData(mockData)
-    setIsLike(Boolean(localStorage.getItem(mockData._id)))
-    setIsLoading(false)
-
+    // 组件挂载时调用fetchWord获取AI生成的土味情话
+    fetchWord()
   }, [])
 
 
   const fetchWord = async () => {
-    let res = await kv.fetch("loveword-honey-0")
-    if (res === "EdgeKV get: key not found" || res instanceof Response === false) {
+    setIsLoading(true)
+    try {
+      // 直接请求指定的API接口
+      const response = await fetch('https://2l.haxck.com/api/ai', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      
+      // 解析API响应
+      const apiResponse = await response.json()
+      
+      // 提取只有情话部分（去掉外层双引号、中文引号和表情）
+      // API返回格式: "“情话内容” 😄"
+      let loveSentence = apiResponse;
+      
+      // 去掉外层的双引号
+      loveSentence = loveSentence.replace(/^"|"$/g, '');
+      
+      // 去掉中文引号
+      loveSentence = loveSentence.replace(/^“|”$/g, '');
+      
+      // 去掉表情符号
+      loveSentence = loveSentence.replace(/[\u{1F600}-\u{1F6FF}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}]/gu, '').trim();
+      
+      // 创建符合Loveword接口的数据
+      const newWord = {
+        _id: `ai-${Date.now()}`,
+        type: 'love',
+        sentent: loveSentence,
+        likeCount: Math.floor(Math.random() * 100) // 随机生成点赞数
+      };
+      
+      setData(newWord)
+      setIsLike(Boolean(localStorage.getItem(newWord._id)))
+    } catch (error) {
+      console.error('获取土味情话失败:', error)
+      // 失败时使用mock数据
       setData(mockData)
       setIsLike(Boolean(localStorage.getItem(mockData._id)))
+    } finally {
       setIsLoading(false)
-      return
     }
-    
-    // 解析响应内容
-    const dataStr = await res.text()
-    setData(JSON.parse(dataStr))
-    setIsLike(Boolean(localStorage.getItem(mockData._id)))
-    setIsLoading(false)
   }
 
   const likeit = () => {
