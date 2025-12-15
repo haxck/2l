@@ -18,18 +18,18 @@ const FoodWidget = ({list}:{list:{promt:string,list:string}}) => {
     }
 
     const newIntervalId= window.setInterval(() => {
-      setCount(prevCount => {
+      setCount(() => {
         const r: number = sfood();
-        return prevCount = foods[Math.trunc(r)]
+        return foods[Math.trunc(r)]
       });
     }, 80);
     setIntervalId(newIntervalId);
   };
 
   return (
-    <div onClick={handleClick} className="active:scale-90 dark:bg-slate-800 bg-slate-100 opacity-90 rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 mt-4 aspect-square">
+    <div onClick={handleClick} className="active:scale-90 dark:bg-slate-800 bg-slate-100 opacity-90 rounded-xl border border-gray-600/10  shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 mt-4 aspect-square">
       {/* 外层flex容器 */}
-      <div className="w-full h-full flex flex-col">
+      <div className="w-full h-full flex flex-col p-4">
         {/* 顶部行 - 包含提示文字 */}
         <div className="flex items-start justify-start">
           <p className="tracking-wider dark:text-slate-400">{list.promt}</p>
@@ -40,8 +40,7 @@ const FoodWidget = ({list}:{list:{promt:string,list:string}}) => {
           <p className="tracking-wider dark:text-slate-400 text-2xl text-center font-bold">{count}</p>
         </div>
         
-        {/* 底部行 - 空行，用于维持整体布局平衡 */}
-        <div className="h-8"></div>
+
       </div>
     </div>
   );

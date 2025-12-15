@@ -22,7 +22,6 @@ export default function Word() {
 
   const [data, setData] = useState<Loveword | undefined>();
   const [isLoading, setIsLoading] = useState(true);
-  const [isLike, setIsLike] = useState(false);
 
   useEffect(() => {
     // 组件挂载时调用fetchWord获取AI生成的土味情话
@@ -57,24 +56,15 @@ export default function Word() {
       };
       
       setData(newWord)
-      setIsLike(Boolean(localStorage.getItem(newWord._id)))
     } catch (error) {
       console.error('获取土味情话失败:', error)
       // 失败时使用mock数据
       setData(mockData)
-      setIsLike(Boolean(localStorage.getItem(mockData._id)))
     } finally {
       setIsLoading(false)
     }
   }
 
-  const likeit = () => {
-    if (!data) return;
-    
-    const newIsLike = !isLike;
-    setIsLike(newIsLike);
-    
-  }
 
 
 
@@ -102,7 +92,7 @@ export default function Word() {
       </div>
 
       <div className="flex items-center">
-        <div className="ml-3 ">
+        <div className="ml-3 flex items-center">
           <span className="text-gray-600">{data.likeCount} 人喜欢</span>
         </div>
 

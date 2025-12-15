@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import { Children } from 'react';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
 
@@ -23,24 +22,15 @@ dayjsWithLocale.updateLocale('en', {
     MM: "%d 个月",
     y: "1 年",
     yy: "%d 年"
-    // future: "in %s",
-    // past: "%s ago",
-    // s: 'a few seconds',
-    // m: "a minute",
-    // mm: "%d minutes",
-    // h: "an hour",
-    // hh: "%d hours",
-    // d: "a day",
-    // dd: "%d days",
-    // M: "a month",
-    // MM: "%d months",
-    // y: "a year",
-    // yy: "%d years"
   }
 })
 
-export default function Days(props){
+interface DaysProps {
+  time: string;
+}
+
+export default function Days(props: DaysProps) {
   const tmp = dayjs().to(dayjs(props.time))
-  return tmp
+  return <span>{tmp}</span>
 
 }

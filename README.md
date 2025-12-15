@@ -15,8 +15,11 @@
 
 ## 技术栈
 - Node.js
-- Next.js
-- MongoDB
+- React
+- TailwindCSS
+- Shadcn UI
+
+
 
 ## 安装依赖
 ```
@@ -24,5 +27,8 @@ npm install
 ```
 ## 启动
 ```
-next dev
+npm run dev
 ```
+
+本项目由阿里云ESA提供加速、计算和保护
+![aliyun](https://img.alicdn.com/imgextra/i3/O1CN01H1UU3i1Cti9lYtFrs_!!6000000000139-2-tps-7534-844.png)
