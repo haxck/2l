@@ -11,7 +11,7 @@ const dayjsWithLocale = dayjs as any;
 dayjsWithLocale.updateLocale('en', {
   relativeTime: {
     future: "还有 %s",
-    past: "%s 之前",
+    past: "%s前",
     s: '几秒钟',
     m: "1 分钟",
     mm: "%d 分钟",
@@ -19,8 +19,8 @@ dayjsWithLocale.updateLocale('en', {
     hh: "%d 小时",
     d: "1 天",
     dd: "%d 天",
-    M: "1月",
-    MM: "%d 月",
+    M: "1 个月",
+    MM: "%d 个月",
     y: "1 年",
     yy: "%d 年"
     // future: "in %s",

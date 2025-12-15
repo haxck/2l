@@ -5,6 +5,7 @@ import 'swiper/css/effect-cards';
 import { EffectCards } from 'swiper/modules'
 import { Button, Card, CardBody, CardHeader } from '@nextui-org/react';
 import Days from './Days';
+import dayjs, { Dayjs } from 'dayjs';
 
 export default function Commemoration({commemorations,delCommemoration}) {
 
@@ -35,7 +36,7 @@ export default function Commemoration({commemorations,delCommemoration}) {
               </CardHeader>
               <CardBody className="overflow-visible py-2 justify-center items-center">
                 <h4 className="font-bold text-large ">
-                  {Days(data)}
+                  {Days(data)} ({Math.abs(dayjs(data.time).diff(dayjs(new Date()), 'day'))} 天)
                 </h4>
               </CardBody>
             </Card>
