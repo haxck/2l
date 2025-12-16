@@ -8,17 +8,17 @@ import { useEffect, useState } from "react";
 
 interface CommemorationItem {
   title: string;
-  time: string;
+  date: Date;
 }
 
 function App() {
 
   const [commemorations, setCommemorations] = useState<CommemorationItem[]>([]);
-  function newCommemoration(title: string, time: string) {
-    setCommemorations([{ title, time }, ...commemorations]);
+  function newCommemoration(title: string, date: Date) {
+    setCommemorations([{ title, date }, ...commemorations]);
     localStorage.setItem(
       "commemorations",
-      JSON.stringify([{ title, time }, ...commemorations]),
+      JSON.stringify([{ title, date }, ...commemorations]),
     );
   }
   function delCommemoration(index: number) {
@@ -34,8 +34,13 @@ function App() {
   useEffect(() => {
     const stored = localStorage.getItem("commemorations");
     if (stored !== null) {
-      console.log(stored);
-      setCommemorations(JSON.parse(stored));
+      const parsed = JSON.parse(stored);
+      // 将日期字符串转换回 Date 对象
+      const converted = parsed.map((item: any) => ({
+        ...item,
+        date: new Date(item.date)
+      }));
+      setCommemorations(converted);
     }
   }, []);
 

@@ -8,7 +8,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: oklch(68.323% 0.16513 48.417);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -130,12 +130,12 @@
 }
 .dialog-content{
 	transform-origin: var(--radix-dropdown-menu-content-transform-origin);
-	animation: scaleIn 0.5s ease-out;
+	animation: scaleIn 0.3s ease-out;
 }
 @keyframes scaleIn {
 	from {
 		opacity: 0;
-		transform: scale(0.5);
+		transform: scale(0.8);
 	}
 	to {
 		opacity: 1;
