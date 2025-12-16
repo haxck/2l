@@ -89,7 +89,7 @@ export default function Commemoration({
                     {dayjs(data.date).diff(dayjs(new Date())) < 0
                       ? "  " +
                         Math.abs(
-                          dayjs(data.date).diff(dayjs(new Date()), "day") + 1,
+                          dayjs(data.date).diff(dayjs(new Date()), "day") -1 ,
                         ) +
                         " 天"
                       : ""}
