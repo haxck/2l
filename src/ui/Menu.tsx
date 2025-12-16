@@ -21,8 +21,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@radix-ui/react-popover";
-import { format } from "date-fns";
-import { CalendarIcon, ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Label } from "@/components/ui/label";
 export default function Menu({
@@ -34,6 +33,9 @@ export default function Menu({
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [date, setDate] = useState<Date>();
   const [open, setOpen] = useState<boolean>(false);
+  // 日记功能状态
+  const [diaryDialogOpen, setDiaryDialogOpen] = useState<boolean>(false);
+  const [diaryContent, setDiaryContent] = useState<string>("");
 
   const onAction = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!title || !date) {
@@ -51,6 +53,41 @@ export default function Menu({
     setDialogOpen(true);
   };
 
+  // 处理添加日记点击
+  const handleAddDiaryClick = () => {
+    setDiaryContent("");
+    setDiaryDialogOpen(true);
+  };
+
+  // 保存日记
+  const saveDiary = () => {
+    if (!diaryContent.trim()) {
+      alert("请填写日记内容");
+      return;
+    }
+    
+    // 获取现有日记
+    const stored = localStorage.getItem('diaries');
+    const diaries = stored ? JSON.parse(stored) : [];
+    
+    // 创建新日记
+    const newDiary = {
+      id: Date.now().toString(),
+      date: new Date(),
+      content: diaryContent.trim()
+    };
+    
+    // 更新并保存日记
+    const updatedDiaries = [newDiary, ...diaries];
+    localStorage.setItem('diaries', JSON.stringify(updatedDiaries));
+    
+    // 触发自定义事件，通知其他组件数据已更新
+    window.dispatchEvent(new CustomEvent('diaryUpdated'));
+    
+    // 关闭对话框
+    setDiaryDialogOpen(false);
+  };
+
   return (
     <div>
       <DropdownMenu>
@@ -65,6 +102,9 @@ export default function Menu({
         <DropdownMenuContent align="end">
           <DropdownMenuItem onSelect={handleAddClick}>
             <DropdownMenuLabel>添加新的纪念日</DropdownMenuLabel>
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={handleAddDiaryClick}>
+            <DropdownMenuLabel>写日记</DropdownMenuLabel>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -142,6 +182,46 @@ export default function Menu({
             </DialogFooter>
           </DialogContent>
         </form>
+      </Dialog>
+
+      {/* 日记对话框 */}
+      <Dialog open={diaryDialogOpen} onOpenChange={setDiaryDialogOpen}>
+        <DialogContent className="dialog-content max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-semibold bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+              写日记
+            </DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <div className="space-y-4">
+              <div className="flex flex-col gap-3">
+                <Label htmlFor="diary-content" className="px-1">
+                  今日心情：
+                </Label>
+                <textarea
+                  id="diary-content"
+                  placeholder="写下今天的心情和故事..."
+                  value={diaryContent}
+                  onChange={(e) => setDiaryContent(e.target.value)}
+                  required
+                  className="w-full p-2 border border-gray-300 rounded-lg resize-none h-40"
+                />
+              </div>
+            </div>
+          </div>
+          <DialogFooter className="flex justify-end gap-3">
+            <DialogClose asChild>
+              <Button variant="outline" onClick={() => setDiaryDialogOpen(false)}>
+                取消
+              </Button>
+            </DialogClose>
+            <DialogClose asChild>
+              <Button onClick={saveDiary}>
+                保存日记
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
       </Dialog>
     </div>
   );

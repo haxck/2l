@@ -3,6 +3,7 @@ import FoodWidget from "./ui/FoodWidget";
 import TimeWidget from "./ui/TimeWidget";
 import Menu from "./ui/Menu";
 import Commemoration from "./ui/Commemoration";
+import DiaryWidget from "./ui/DiaryWidget";
 import { useEffect, useState } from "react";
 
 
@@ -54,6 +55,7 @@ function App() {
           delCommemoration={delCommemoration}
         />
         <WordWidget />
+        <DiaryWidget />
         <div className="grid min-sm:grid-cols-3 grid-cols-2 gap-3">
           <FoodWidget
             list={{

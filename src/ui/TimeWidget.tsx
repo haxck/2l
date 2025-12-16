@@ -51,7 +51,7 @@ export default function TimeWidget() {
         const totalDays = getMonthDays();
         return totalDays - date;
     }
-    function isLeapYear(year) {
+    function isLeapYear(year: number) {
         return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
     }
     function getYearDays() {
@@ -61,7 +61,7 @@ export default function TimeWidget() {
     function getDayOfYear() {
         const year = today.getFullYear();
         const start = new Date(year, 0, 0);
-        const diff = today - start;
+        const diff = today.getTime() - start.getTime();
         return Math.floor(diff / (1000 * 60 * 60 * 24));
     }
     function getYearProgress() {
