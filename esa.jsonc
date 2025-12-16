@@ -1,10 +1,10 @@
 {
   "name": "lover",
-  "entry": "./src/app/function/index.js",
+  "entry": "./src/main.tsx",
   "installCommand": "npm install",
   "buildCommand": "npm run build",
   "assets": {
-    "directory": "./out",
+    "directory": "./dist",
     "notFoundStrategy": "404Page"
   }
 }
