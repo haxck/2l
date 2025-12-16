@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
 
 interface DiaryItem {
@@ -116,7 +117,7 @@ export default function DiaryWidget() {
       </div>
 
       {/* 日记列表 */}
-      <div className="space-y-3">
+      <div className="space-y-3 mb-4">
         {diaries.length === 0 ? (
           <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">
             还没有日记，点击右下角开始写日记吧~</p>
@@ -126,8 +127,8 @@ export default function DiaryWidget() {
               key={diary.id} 
               className="p-3 bg-white dark:bg-slate-700 rounded-lg shadow-sm"
             >
-              <div className="flex justify-between items-start mb-2">
-                <span className="text-xs text-gray-500 dark:text-gray-400 ">
+              <div className="flex justify-between items-center mb-2">
+                <span className=" text-gray-500 dark:text-gray-400 ">
                   {diary.date.toLocaleString('zh-CN', { 
                     year: 'numeric', 
                     month: '2-digit', 
@@ -136,40 +137,36 @@ export default function DiaryWidget() {
                     minute: '2-digit'
                   })}
                 </span>
-                <div className="flex space-x-1 text-wrap">
+                <div className="flex gap-2 line-clamp-1">
                   {editingId === diary.id ? (
                     <>
-                      <button 
+                      <Button 
                         onClick={saveEdit}
-                        className="p-1 text-xs bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
                         title="保存"
                       >
                         ✓
-                      </button>
-                      <button 
+                      </Button>
+                      <Button 
                         onClick={cancelEdit}
-                        className="p-1 text-xs bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
                         title="取消"
                       >
                         ✕
-                      </button>
+                      </Button>
                     </>
                   ) : (
                     <>
-                      <button 
+                      <Button 
                         onClick={() => startEdit(diary)}
-                        className="p-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
                         title="编辑"
                       >
                         ✎
-                      </button>
-                      <button 
+                      </Button>
+                      <Button 
                         onClick={() => deleteDiary(diary.id)}
-                        className="p-1 text-xs bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
                         title="删除"
                       >
                         ✕
-                      </button>
+                      </Button>
                     </>
                   )}
                 </div>
@@ -182,7 +179,7 @@ export default function DiaryWidget() {
                   className="w-full p-2 border border-gray-300 dark:border-gray-500 rounded-lg resize-none h-24 bg-gray-50 dark:bg-slate-600 dark:text-white"
                 />
               ) : (
-                <p className="text-sm dark:text-gray-200 whitespace-pre-wrap text-wrap break-inside-auto overflow-hidden">{diary.content}</p>
+                <p className="dark:text-gray-200 whitespace-pre-wrap text-wrap break-inside-auto overflow-hidden">{diary.content}</p>
               )}
             </div>
           ))

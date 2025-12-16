@@ -101,10 +101,10 @@ export default function Menu({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onSelect={handleAddClick}>
-            <DropdownMenuLabel>添加新的纪念日</DropdownMenuLabel>
+            <DropdownMenuLabel>纪念日 · 倒数日</DropdownMenuLabel>
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={handleAddDiaryClick}>
-            <DropdownMenuLabel>写日记</DropdownMenuLabel>
+            <DropdownMenuLabel>日记</DropdownMenuLabel>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -195,9 +195,6 @@ export default function Menu({
           <div className="py-4">
             <div className="space-y-4">
               <div className="flex flex-col gap-3">
-                <Label htmlFor="diary-content" className="px-1">
-                  今日心情：
-                </Label>
                 <textarea
                   id="diary-content"
                   placeholder="写下今天的心情和故事..."
