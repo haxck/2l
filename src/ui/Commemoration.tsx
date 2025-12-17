@@ -18,13 +18,14 @@ import {
 } from "../components/ui/alert-dialog";
 
 interface CommemorationItem {
+  id: string;
   title: string;
   date: Date;
 }
 
 interface CommemorationProps {
   commemorations: CommemorationItem[];
-  delCommemoration: (index: number) => void;
+  delCommemoration: (id: string) => void;
 }
 
 export default function Commemoration({
@@ -41,9 +42,9 @@ export default function Commemoration({
       modules={[EffectCards]}
       className="mb-4"
     >
-      {commemorations.map((data: CommemorationItem, index: number) => {
+      {commemorations.map((data: CommemorationItem) => {
         return (
-          <SwiperSlide key={data.title}>
+          <SwiperSlide key={data.id}>
             <Card className="py-4 dark:bg-slate-800 bg-slate-100 opacity-90">
               <CardHeader className=" pb-0 pt-2 px-5 flex-col justify-center items-center ">
                 <AlertDialog>
@@ -74,7 +75,7 @@ export default function Commemoration({
                       <AlertDialogCancel>取消</AlertDialogCancel>
                       <AlertDialogAction
                         onClick={() => {
-                          delCommemoration(index);
+                          delCommemoration(data.id);
                         }}
                       >
                         确认删除
@@ -82,11 +83,13 @@ export default function Commemoration({
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
-                <small className="text-gray-500">{data.date.toLocaleDateString()}</small>
+                <small className="text-gray-500">
+                  {data.date && typeof data.date.toLocaleDateString === 'function' ? data.date.toLocaleDateString() : '无效日期'}
+                </small>
                 <p className="text-2xl uppercase font-bold text-gray-600 dark:text-slate-400">
                   {data.title}{" "}
                   <span className="font-serif text-xl relative top-[-10px] right-[3px] rotate-[4deg] inline-block text-pink-300">
-                    {dayjs(data.date).diff(dayjs(new Date())) < 0
+                    {data.date && dayjs(data.date).isValid() && dayjs(data.date).diff(dayjs(new Date())) < 0
                       ? "  " +
                         Math.abs(
                           dayjs(data.date).diff(dayjs(new Date()), "day") -1 ,
@@ -98,7 +101,9 @@ export default function Commemoration({
               </CardHeader>
               <CardContent className="overflow-visible py-2 justify-center items-center">
                 <h4 className="font-bold text-xl text-center text-gray-600">
-                  {Days({time: data.date.toLocaleDateString()})}
+                  {data.date && typeof data.date.toLocaleDateString === 'function' 
+                    ? Days({time: data.date.toLocaleDateString()})
+                    : '无效日期'}
                 </h4>
               </CardContent>
             </Card>

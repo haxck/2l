@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useStore } from '../store';
 
 interface DiaryItem {
   id: string;
@@ -8,69 +9,12 @@ interface DiaryItem {
 }
 
 export default function DiaryWidget() {
-  const [diaries, setDiaries] = useState<DiaryItem[]>([]);
-
-
+  // 从 Zustand store 获取日记数据和相关 actions
+  const diaries = useStore(state => state.diaries);
+  const deleteDiary = useStore(state => state.deleteDiary);
+  
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState('');
-
-  // 从localStorage加载日记
-  const loadDiaries = () => {
-    const stored = localStorage.getItem('diaries');
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      const converted = parsed.map((item: any) => ({
-        ...item,
-        date: new Date(item.date)
-      }));
-      setDiaries(converted.sort((a: DiaryItem, b: DiaryItem) => new Date(b.date).getTime() - new Date(a.date).getTime()));
-    }
-  };
-
-  // 初始加载和监听数据变化
-  useEffect(() => {
-    loadDiaries();
-    
-    // 监听localStorage变化（跨标签页同步）
-    const handleStorageChange = () => {
-      loadDiaries();
-    };
-    
-    // 监听自定义事件（同一标签页内同步）
-    const handleDiaryUpdated = () => {
-      loadDiaries();
-    };
-    
-    window.addEventListener('storage', handleStorageChange);
-    window.addEventListener('diaryUpdated', handleDiaryUpdated);
-    
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('diaryUpdated', handleDiaryUpdated);
-    };
-  }, []);
-
-  // 组件内部修改日记时，手动调用loadDiaries确保同步
-  useEffect(() => {
-    // 当组件内部修改日记时，这个effect不会触发，因为我们直接修改localStorage
-    // 但为了安全起见，我们可以在这里添加额外的同步逻辑
-  }, [diaries]);
-
-
-
-  // 删除日记
-  const deleteDiary = (id: string) => {
-    // 获取现有日记
-    const stored = localStorage.getItem('diaries');
-    if (stored) {
-      const diariesData = JSON.parse(stored);
-      const updated = diariesData.filter((diary: DiaryItem) => diary.id !== id);
-      localStorage.setItem('diaries', JSON.stringify(updated));
-      
-      // 重新加载日记以确保同步
-      loadDiaries();
-    }
-  };
 
   // 开始编辑日记
   const startEdit = (diary: DiaryItem) => {
@@ -82,26 +26,20 @@ export default function DiaryWidget() {
   const saveEdit = () => {
     if (!editingId || !editingContent.trim()) return;
     
-    // 获取现有日记
-    const stored = localStorage.getItem('diaries');
-    if (stored) {
-      const diariesData = JSON.parse(stored);
-      const updated = diariesData.map((diary: DiaryItem) => 
-        diary.id === editingId 
-          ? { ...diary, content: editingContent.trim(), date: new Date() } 
-          : diary
-      );
-      localStorage.setItem('diaries', JSON.stringify(updated));
-      
-      // 重新加载日记以确保同步
-       loadDiaries();
-       
-       // 触发自定义事件，通知其他组件数据已更新
-       window.dispatchEvent(new CustomEvent('diaryUpdated'));
-       
-       setEditingId(null);
-       setEditingContent('');
-    }
+    // 由于当前 Zustand store 没有提供更新日记的 action，我们需要先获取所有日记，更新后再全部替换
+    // 注意：这是一个临时解决方案，后续可以在 store 中添加 updateDiary action
+    const allDiaries = useStore.getState().diaries;
+    const updatedDiaries = allDiaries.map(diary => 
+      diary.id === editingId 
+        ? { ...diary, content: editingContent.trim(), date: new Date() } 
+        : diary
+    );
+    
+    // 直接更新 store 状态
+    useStore.setState({ diaries: updatedDiaries });
+    
+    setEditingId(null);
+    setEditingContent('');
   };
 
   // 取消编辑
@@ -109,6 +47,9 @@ export default function DiaryWidget() {
     setEditingId(null);
     setEditingContent('');
   };
+  
+  // 对日记进行排序（最新的在前面）
+  const sortedDiaries = [...diaries].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
     <div className="words dark:bg-slate-800 bg-slate-100 opacity-90 rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 my-4">
@@ -118,11 +59,11 @@ export default function DiaryWidget() {
 
       {/* 日记列表 */}
       <div className="space-y-3 mb-4">
-        {diaries.length === 0 ? (
+        {sortedDiaries.length === 0 ? (
           <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">
             还没有日记，点击右下角开始写日记吧~</p>
         ) : (
-          diaries.map(diary => (
+          sortedDiaries.map(diary => (
             <div 
               key={diary.id} 
               className="p-3 bg-white dark:bg-slate-700 rounded-lg shadow-sm"

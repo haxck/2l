@@ -26,11 +26,15 @@ dayjsWithLocale.updateLocale('en', {
 })
 
 interface DaysProps {
-  time: string;
+  time: string | Date;
 }
 
 export default function Days(props: DaysProps) {
-  const tmp = dayjs().to(dayjs(props.time))
-  return <span>{tmp}</span>
-
+  // 尝试解析日期，确保dayjs能正确处理
+  const date = dayjs(props.time);
+  if (!date.isValid()) {
+    return <span>无效日期</span>;
+  }
+  const tmp = dayjs().to(date);
+  return <span>{tmp}</span>;
 }

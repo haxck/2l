@@ -3,59 +3,31 @@ import FoodWidget from "./ui/FoodWidget";
 import TimeWidget from "./ui/TimeWidget";
 import Menu from "./ui/Menu";
 import Commemoration from "./ui/Commemoration";
+import ErrorBoundary from "./components/ErrorBoundary";
 import DiaryWidget from "./ui/DiaryWidget";
-import { useEffect, useState } from "react";
-
-
-interface CommemorationItem {
-  title: string;
-  date: Date;
-}
+import PlaceWidget from "./ui/PlaceWidget";
+import { useStore } from "./store";
 
 function App() {
-
-  const [commemorations, setCommemorations] = useState<CommemorationItem[]>([]);
-  function newCommemoration(title: string, date: Date) {
-    setCommemorations([{ title, date }, ...commemorations]);
-    localStorage.setItem(
-      "commemorations",
-      JSON.stringify([{ title, date }, ...commemorations]),
-    );
-  }
-  function delCommemoration(index: number) {
-    const stored = localStorage.getItem("commemorations");
-    if (stored) {
-      let c = JSON.parse(stored);
-      c.splice(index, 1);
-      setCommemorations([...c]);
-      localStorage.setItem("commemorations", JSON.stringify(c));
-    }
-  }
-
-  useEffect(() => {
-    const stored = localStorage.getItem("commemorations");
-    if (stored !== null) {
-      const parsed = JSON.parse(stored);
-      // 将日期字符串转换回 Date 对象
-      const converted = parsed.map((item: any) => ({
-        ...item,
-        date: new Date(item.date)
-      }));
-      setCommemorations(converted);
-    }
-  }, []);
+  // 使用 Zustand store
+  const commemorations = useStore(state => state.commemorations);
+  const addCommemoration = useStore(state => state.addCommemoration);
+  const deleteCommemoration = useStore(state => state.deleteCommemoration);
 
   return (
     <div className="p-6 select-none min-h-screen bg flex justify-center">
       <div className="max-sm:w-full max-lg:w-2/3 max-xl:w-2/4 w-1/3 py-8">
         <TimeWidget />
-        <Menu SetCommemorations={newCommemoration} />
-        <Commemoration
-          commemorations={commemorations}
-          delCommemoration={delCommemoration}
-        />
+        <Menu SetCommemorations={addCommemoration} />
+        <ErrorBoundary>
+          <Commemoration
+            commemorations={commemorations}
+            delCommemoration={deleteCommemoration}
+          />
+        </ErrorBoundary>
         <WordWidget />
         <DiaryWidget />
+        <PlaceWidget />
         <div className="grid min-sm:grid-cols-3 grid-cols-2 gap-3">
           <FoodWidget
             list={{
