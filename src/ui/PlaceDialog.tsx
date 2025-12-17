@@ -45,7 +45,6 @@ export const PlaceDialog = ({
   onOpenChange,
   onAddPlace,
   onEditPlace,
-  places,
   editingPlace
 }: PlaceDialogProps) => {
   const [placeName, setPlaceName] = useState<string>('');
