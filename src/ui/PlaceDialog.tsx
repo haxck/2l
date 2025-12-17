@@ -18,7 +18,6 @@ import {
 import { Calendar } from '@/components/ui/calendar';
 import { ChevronDownIcon, Loader2 } from 'lucide-react';
 import { useGeocoding } from '../hooks/useGeocoding';
-import { usePlaceSuggestions } from '../hooks/usePlaceSuggestions';
 
 interface Place {
   id: string;
@@ -85,18 +84,6 @@ export const PlaceDialog = ({
       resetGeocoding();
     }
   }, [open, resetGeocoding]);
-
-  // 使用地点建议hook
-  const { filteredPlaces, showSuggestions, setShowSuggestions, selectPlace } = usePlaceSuggestions(
-    places,
-    placeName,
-    (place) => {
-      setPlaceName(place.name);
-      setPlaceDescription(place.description);
-      setPlaceLatLng({ lat: place.lat, lng: place.lng });
-      setPlaceDate(place.date);
-    }
-  );
 
   const handleSave = async () => {
     if (!placeName.trim()) {
@@ -188,38 +175,9 @@ export const PlaceDialog = ({
                 onChange={(e) => setPlaceName(e.target.value)}
                 required
                 className="w-full"
-                onBlur={() => {
-                  // 延迟关闭提示，以便用户点击选项
-                  setTimeout(() => setShowSuggestions(false), 200);
-                }}
-                onFocus={() => {
-                  if (filteredPlaces.length > 0) {
-                    setShowSuggestions(true);
-                  }
-                }}
+
               />
               
-              {/* 去过的地方提示 */}
-              {showSuggestions && (
-                <div className="absolute z-10 top-full mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
-                  {filteredPlaces.map((place) => (
-                    <div
-                      key={place.id}
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-left"
-                      onClick={() => selectPlace(place)}
-                    >
-                      <div className="font-medium">{place.name}</div>
-                      {place.description && (
-                        <div className="text-xs text-gray-500">{place.description}</div>
-                      )}
-                      <div className="text-xs text-gray-400">
-                        {new Date(place.date.from).toLocaleDateString()} - {new Date(place.date.to).toLocaleDateString()}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
               {/* 地理编码状态显示 */}
               {isGeocoding && (
                 <div className="flex items-center gap-2 text-sm text-blue-600">

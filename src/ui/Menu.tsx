@@ -114,7 +114,12 @@ export default function Menu({
       {/* 地点对话框 */}
       <PlaceDialog
         open={placeDialogOpen}
-        onOpenChange={setPlaceDialogOpen}
+        onOpenChange={(open) => {
+          setPlaceDialogOpen(open);
+          if (!open) {
+            setEditingPlace(null);
+          }
+        }}
         onAddPlace={handleAddPlace}
         onEditPlace={handleEditPlace}
         places={places}
