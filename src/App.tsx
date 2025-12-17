@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="p-6 select-none min-h-screen bg flex justify-center">
-      <div className="max-sm:w-full max-lg:w-2/3 max-xl:w-2/4 w-1/3 py-8">
+      <div className="max-sm:w-full max-lg:w-2/3 max-xl:w-2/4 w-1/3">
         <TimeWidget />
         <Menu SetCommemorations={addCommemoration} />
         <ErrorBoundary>

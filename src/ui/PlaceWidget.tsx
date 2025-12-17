@@ -158,7 +158,7 @@ export default function PlaceWidget() {
       </div>
 
       {places.length === 0 ? (
-        <Empty className="md:p-6">
+        <Empty>
           <EmptyHeader>
             <EmptyMedia variant="icon">
               <IconMap2 />

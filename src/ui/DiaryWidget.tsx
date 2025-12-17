@@ -1,7 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useStore } from '../store';
-
+import { IconWriting } from '@tabler/icons-react';
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
 interface DiaryItem {
   id: string;
   date: Date;
@@ -60,8 +61,17 @@ export default function DiaryWidget() {
       {/* 日记列表 */}
       <div className="space-y-3 mb-4">
         {sortedDiaries.length === 0 ? (
-          <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">
-            还没有日记，点击右下角开始写日记吧~</p>
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <IconWriting />
+            </EmptyMedia>
+            <EmptyTitle>想到什么就写下来</EmptyTitle>
+            <EmptyDescription className="w-full">
+              所有开心、烦恼、思考都是你人生的一部分~
+            </EmptyDescription>
+          </EmptyHeader>
+        </Empty>
         ) : (
           sortedDiaries.map(diary => (
             <div 
