@@ -92,7 +92,7 @@ export default function Menu({
             <DropdownMenuLabel>日记</DropdownMenuLabel>
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={() => setPlaceDialogOpen(true)}>
-            <DropdownMenuLabel>去过的地方</DropdownMenuLabel>
+            <DropdownMenuLabel>标记地点</DropdownMenuLabel>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
