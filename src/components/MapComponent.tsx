@@ -114,8 +114,9 @@ export default function MapComponent({
             image: "https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png",
             size: [24, 36],
             imageSize: [24, 36],
-            anchor: [12, 36],
+            anchor: "center"
           }),
+          offset: new window.AMap.Pixel(-12,-36)
         });
 
         // 创建信息窗口
