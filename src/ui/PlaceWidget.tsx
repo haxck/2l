@@ -4,7 +4,6 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import {
   Empty,
-  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
@@ -145,7 +144,7 @@ export default function PlaceWidget() {
   return (
     <div className="words dark:bg-slate-800 bg-slate-100 opacity-90 rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 my-4">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-bold">去过的地方</h3>
+        <h3 className="text-lg font-bold">地点</h3>
         {/* 中国/世界视图切换 */}
         <div className="flex items-center space-x-2 text-sm">
           <Switch
@@ -169,11 +168,6 @@ export default function PlaceWidget() {
               你一定走过很多地方，那是你重要的回忆~
             </EmptyDescription>
           </EmptyHeader>
-          <EmptyContent>
-            <div className="flex gap-2">
-              <Button>标记地点</Button>
-            </div>
-          </EmptyContent>
         </Empty>
       ) : (
         <>
