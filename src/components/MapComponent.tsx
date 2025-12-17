@@ -50,10 +50,8 @@ export default function MapComponent({
     }
 
     try {
-      // 配置安全密钥
       if (AMAP_SECURITY_KEY) {
         window._AMapSecurityConfig = { securityJsCode: AMAP_SECURITY_KEY };
-        console.log("安全密钥配置完成");
       }
 
       // 确保地图容器有明确的尺寸
@@ -63,7 +61,6 @@ export default function MapComponent({
         mapRef.current.style.height = "300px";
       }
 
-      console.log("开始加载高德地图API");
       // 加载高德地图API
       await AMapLoader.load({
         key: AMAP_KEY,
@@ -83,7 +80,6 @@ export default function MapComponent({
 
       mapInstance.current = map;
       setMapLoaded(true);
-      console.log("地图实例创建成功");
 
       // 添加标记
       addMarkers(map);
@@ -98,11 +94,6 @@ export default function MapComponent({
 
     // 清除地图上所有标记
     map.clearMap();
-
-    if (places.length === 0) {
-      console.log("没有地点数据，不添加标记");
-      return;
-    }
 
     places.forEach((place) => {
       try {
@@ -187,7 +178,6 @@ export default function MapComponent({
   // 当组件重新渲染时，确保地图正确显示
   useEffect(() => {
     if (mapInstance.current && mapLoaded) {
-      console.log("地图重绘");
       mapInstance.current.resize();
     }
   }, [mapLoaded]);
