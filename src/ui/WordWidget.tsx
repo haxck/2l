@@ -87,7 +87,7 @@ export default function Word() {
 
       <div className="before:block before:absolute before:-inset-1 before:-skew-y-3 before: relative block p-2 " >
         <p className="rise-up bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent relative words text-xl whitespace-pre-wrap">
-          {data.sentent.replace(/\\n/g, '\n')}
+          {data.sentent}
         </p>
       </div>
 
