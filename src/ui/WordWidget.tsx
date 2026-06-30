@@ -30,46 +30,58 @@ export default function Word() {
 
 
   const fetchWord = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      // 直接请求指定的API接口
       const response = await fetch('https://2l.haxck.com/api/ai', {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      
-      // 解析API响应
-      const apiResponse = await response.json()
-      
-      // 提取只有情话部分（去掉外层双引号、中文引号和表情）
-      // API返回格式: "“情话内容” 😄"
-      let loveSentence = apiResponse;
+        headers: { 'Content-Type': 'application/json' }
+      });
 
-      // 创建符合Loveword接口的数据
-      const newWord = {
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const apiResponse = await response.json();
+
+      // 关键：确保拿到的是一个字符串
+      let loveSentence: string;
+      if (typeof apiResponse === 'string') {
+        loveSentence = apiResponse;
+      } else if (apiResponse && typeof apiResponse.sentence === 'string') {
+        // 万一 API 返回的是 { sentence: "情话" } 这样的对象
+        loveSentence = apiResponse.sentence;
+      } else if (apiResponse && typeof apiResponse.error === 'string') {
+        // 如果确实返回了 { error, details }，直接抛出可读错误
+        throw new Error(apiResponse.error + (apiResponse.details ? ': ' + apiResponse.details : ''));
+      } else {
+        // 任何其他格式都视为异常
+        throw new Error('Unexpected response format');
+      }
+
+      // 清理字符串（去掉多余引号等，这里按你之前的逻辑处理）
+      // ...
+
+      const newWord: Loveword = {
         _id: `ai-${Date.now()}`,
         type: 'love',
-        sentent: loveSentence,
-        likeCount: Math.floor(Math.random() * 100) // 随机生成点赞数
+        sentent: loveSentence,      // 现在确保是字符串
+        likeCount: Math.floor(Math.random() * 100)
       };
-      
-      setData(newWord)
+
+      setData(newWord);
     } catch (error) {
-      console.error('获取土味情话失败:', error)
-      // 失败时使用mock数据
-      setData(mockData)
+      console.error('获取土味情话失败:', error);
+      setData(mockData);           // 降级到 mock 数据，页面不会白屏
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
 
 
 
   if (isLoading) return <>
-      <div className="animate-pulse isolate rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 flex flex-col justify-between  bg-red-100/20 px-4 sm:col-span-6 lg:col-span-4">
+    <div className="animate-pulse isolate rounded-xl border border-gray-600/10 p-4 shadow-xl shadow-gray-400/10 transition-all duration-300 dark:shadow-black/0 flex flex-col justify-between  bg-red-100/20 px-4 sm:col-span-6 lg:col-span-4">
       <div className="flex-1 space-y-6 py-1">
         <div className="h-3 bg-slate-200 rounded"></div>
         <div className="space-y-3">
